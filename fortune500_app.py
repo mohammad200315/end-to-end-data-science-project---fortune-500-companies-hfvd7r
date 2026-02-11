@@ -683,7 +683,7 @@ st.markdown(f"""
             {_('Developed by: Mohammad Naser', 'تم التطوير بواسطة: محمد زكريا ناصر')}
         </p>
         <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">
-            {_('Data Scientist', 'عالم بيانات')}
+            {_('Data Analyst', 'محلل بيانات')}
         </p>
     </div>
     <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 15px; flex-wrap: wrap;">
