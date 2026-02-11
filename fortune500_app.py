@@ -163,7 +163,7 @@ st.markdown(f"""
     </p>
     <div style="background: rgba(255,255,255,0.15); padding: 10px; border-radius: 10px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.2);">
         <p style="color: white; margin: 0; font-size: 1.1rem;">
-            {_('Developed by: Mohammad Al-Saify', 'تم التطوير بواسطة: محمد الصيفي')}
+            {_('Developed by: Mohammad Naser', 'تم التطوير بواسطة: محمد زكريا ناصر')}
         </p>
     </div>
 </div>
