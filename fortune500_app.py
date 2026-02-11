@@ -174,7 +174,7 @@ with st.sidebar:
     <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
         <h3 style="color: white; margin-top: 0;">{_('Control Panel', 'لوحة التحكم')}</h3>
         <p style="color: rgba(255,255,255,0.8); margin-bottom: 0; font-size: 0.9rem;">
-            {_('Developer: Mohammad Al-Saify', 'المطور: محمد الصيفي')}
+            {_('Developer: Mohammad Naser', 'المطور: محمد زكريا ناصر')}
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -444,7 +444,7 @@ st.markdown(f"""
 <hr style="margin: 40px 0; border: none; height: 1px; background: rgba(255,255,255,0.2);">
 <div style="text-align: center; color: rgba(255,255,255,0.7); padding: 20px;">
     <p style="font-size: 1.2rem; margin-bottom: 10px;"><strong>{_('Fortune 500 Analytics Dashboard', 'لوحة تحليل Fortune 500')}</strong></p>
-    <p style="font-size: 1.1rem; margin-bottom: 5px;">{_('Developed by: Mohammad Naser', 'تم التطوير بواسطة: محمد ناصر')}</p>
+    <p style="font-size: 1.1rem; margin-bottom: 5px;">{_('Developed by: Mohammad Naser', 'تم التطوير بواسطة: محمد زكريا ناصر')}</p>
     <p style="font-size: 1rem; margin-bottom: 5px;">{_('Data Scientist ', 'عالم بيانات')}</p>
     <p style="font-size: 0.9rem; margin-bottom: 5px;">{_('© 2024 All Rights Reserved', '© 2024 جميع الحقوق محفوظة')}</p>
     <p style="font-size: 0.9rem;">{_('Powered by Streamlit & Plotly', 'بتقنية Streamlit و Plotly')} | 1996-2024</p>
