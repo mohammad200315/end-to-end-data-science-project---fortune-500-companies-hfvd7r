@@ -92,8 +92,6 @@ h1, h2, h3, h4, h5, h6 {
 </style>
 """, unsafe_allow_html=True)
 
-st.sidebar.image("logo.png", use_container_width=True)
-
 lang = st.sidebar.radio("Language / اللغة", ["English", "العربية"], index=0)
 
 def _(en, ar):
@@ -143,15 +141,11 @@ colors = {
     'danger': '#EF4444'
 }
 
-col1, col2, col3 = st.columns([1,2,1])
-with col2:
-    st.image("WhatsApp Image 2026-02-11 at 1.40.33 PM (1).jpeg", use_container_width=True)
-
 st.markdown(f"""
 <div style="background: linear-gradient(135deg, {colors['primary']} 0%, {colors['secondary']} 100%);
-            padding: 30px; border-radius: 20px; margin-bottom: 30px; text-align: center;">
-    <h1 style="color: white; margin: 0; font-size: 2.5rem;">{_('Fortune 500 Analytics Dashboard', 'لوحة تحليل Fortune 500')}</h1>
-    <p style="color: rgba(255,255,255,0.9); margin-top: 10px; font-size: 1.1rem;">
+            padding: 40px; border-radius: 20px; margin-bottom: 30px; text-align: center;">
+    <h1 style="color: white; margin: 0; font-size: 2.8rem;">{_('Fortune 500 Analytics Dashboard', 'لوحة تحليل Fortune 500')}</h1>
+    <p style="color: rgba(255,255,255,0.9); margin-top: 10px; font-size: 1.2rem;">
         {_('1996-2024 Analysis & Predictions', 'تحليل وتوقعات 1996-2024')}
     </p>
 </div>
@@ -173,9 +167,6 @@ with st.sidebar:
             _("Data Overview", "نظرة عامة")
         ]
     )
-    
-    st.sidebar.markdown("---")
-    st.sidebar.image("WhatsApp Image 2026-02-11 at 1.40.33 PM.jpeg", use_container_width=True)
 
 if menu == _("Year Analysis", "تحليل السنوات"):
     st.markdown('<div class="custom-card">', unsafe_allow_html=True)
