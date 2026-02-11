@@ -4,9 +4,11 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import base64
 import warnings
 warnings.filterwarnings('ignore')
 
+# --- Page config ---
 st.set_page_config(
     page_title="Fortune 500 Analytics Dashboard",
     page_icon="WhatsApp Image 2026-02-11 at 3.17.53 PM.jpeg",
@@ -14,102 +16,118 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.markdown("""
+# --- Helper function to load image as base64 ---
+def get_base64_of_image(image_path):
+    with open(image_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# Convert your local image to base64
+image_path = r"WhatsApp Image 2026-02-11 at 3.32.24 PM.jpeg"
+image_base64 = get_base64_of_image(image_path)
+
+# --- CSS styling with background image ---
+st.markdown(f"""
 <style>
-.stApp {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-.custom-card {
-    background: white;
+.stApp {{
+    background-image: url("data:image/jpeg;base64,{image_base64}");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}}
+.custom-card {{
+    background: rgba(255,255,255,0.9);
     border-radius: 15px;
     padding: 20px;
     margin: 10px 0;
     border: 1px solid #e0e0e0;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
+}}
 .custom-card h1, .custom-card h2, .custom-card h3, .custom-card h4, .custom-card h5, .custom-card h6,
-.custom-card p, .custom-card span, .custom-card div {
+.custom-card p, .custom-card span, .custom-card div {{
     color: #000000 !important;
-}
-.stButton > button {
+}}
+.stButton > button {{
     background: linear-gradient(135deg, #5E3A8A 0%, #3B82F6 100%);
     color: white;
     border: none;
     border-radius: 8px;
     padding: 10px 20px;
     font-weight: 500;
-}
-.stButton > button:hover {
+}}
+.stButton > button:hover {{
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-.stTabs [data-baseweb="tab-list"] {
+}}
+.stTabs [data-baseweb="tab-list"] {{
     gap: 10px;
     background: transparent;
-}
-.stTabs [data-baseweb="tab"] {
+}}
+.stTabs [data-baseweb="tab"] {{
     background: rgba(255,255,255,0.1);
     border-radius: 8px;
     color: white;
     padding: 10px 20px;
     border: 1px solid rgba(255,255,255,0.2);
-}
-.stTabs [aria-selected="true"] {
+}}
+.stTabs [aria-selected="true"] {{
     background: rgba(255,255,255,0.25);
     color: white;
-}
-.stSelectbox, .stDropdown {
+}}
+.stSelectbox, .stDropdown {{
     background: white;
     border-radius: 8px;
-}
-.stSelectbox label, .stDropdown label {
+}}
+.stSelectbox label, .stDropdown label {{
     color: white !important;
-}
-h1, h2, h3, h4, h5, h6 {
+}}
+h1, h2, h3, h4, h5, h6 {{
     color: white !important;
-}
-.stMarkdown {
+}}
+.stMarkdown {{
     color: white !important;
-}
-.stMetric {
+}}
+.stMetric {{
     background: white;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.stMetric label, .stMetric div {
+}}
+.stMetric label, .stMetric div {{
     color: #000000 !important;
-}
-.dataframe {
+}}
+.dataframe {{
     color: #000000 !important;
-}
-.stDataFrame {
+}}
+.stDataFrame {{
     color: #000000 !important;
-}
-.stDataFrame td, .stDataFrame th {
+}}
+.stDataFrame td, .stDataFrame th {{
     color: #000000 !important;
-}
-.footer {
+}}
+.footer {{
     text-align: center;
     color: rgba(255,255,255,0.7);
     padding: 20px;
     font-size: 14px;
-}
-.developer {
+}}
+.developer {{
     background: rgba(255,255,255,0.15);
     padding: 15px;
     border-radius: 10px;
     margin-top: 20px;
     border: 1px solid rgba(255,255,255,0.2);
-}
+}}
 </style>
 """, unsafe_allow_html=True)
 
+# --- Language Selector ---
 lang = st.sidebar.radio("Language / اللغة", ["English", "العربية"], index=0)
 
 def _(en, ar):
     return en if lang == "English" else ar
 
+# --- Load Data ---
 @st.cache_data
 def load_data():
     files = {}
@@ -154,6 +172,7 @@ colors = {
     'danger': '#EF4444'
 }
 
+# --- Main Header ---
 st.markdown(f"""
 <div style="background: linear-gradient(135deg, {colors['primary']} 0%, {colors['secondary']} 100%);
             padding: 40px; border-radius: 20px; margin-bottom: 30px; text-align: center;">
@@ -169,6 +188,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+# --- Sidebar & Menu ---
 with st.sidebar:
     st.markdown(f"""
     <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
