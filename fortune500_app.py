@@ -6,115 +6,44 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import base64
 import warnings
-import os
-from datetime import datetime
 warnings.filterwarnings('ignore')
-
-"""
-FORTUNE 500 ANALYTICS DASHBOARD
-================================
-Developer: Mohammad Zakaria Naser
-Date: 2024
-Copyright © 2024 Mohammad Naser. All rights reserved.
-This application was developed from scratch by Mohammad Naser.
-"""
 
 st.set_page_config(
     page_title="Fortune 500 Analytics Dashboard",
-    page_icon="📊",
+    page_icon="WhatsApp Image 2026-02-11 at 3.17.53 PM.jpeg",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 def get_base64_of_image(image_path):
-    try:
-        with open(image_path, "rb") as f:
-            data = f.read()
-        return base64.b64encode(data).decode()
-    except:
-        return None
+    with open(image_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
 
 image_path = r"WhatsApp Image 2026-02-11 at 3.32.24 PM.jpeg"
-if os.path.exists(image_path):
-    image_base64 = get_base64_of_image(image_path)
-else:
-    image_base64 = None
-
-if image_base64:
-    bg_style = f"""
-    .stApp {{
-        background-image: url("data:image/jpeg;base64,{image_base64}");
-        background-size: cover;
-        background-attachment: fixed;
-        background-position: center;
-    }}
-    """
-else:
-    bg_style = """
-    .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    """
+image_base64 = get_base64_of_image(image_path)
 
 st.markdown(f"""
 <style>
-{bg_style}
+.stApp {{
+    background-image: url("data:image/jpeg;base64,{image_base64}");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}}
 
 .main > div {{
-    background: transparent !important;
-    backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.65) !important;
+    backdrop-filter: blur(8px) !important;
+    border-radius: 20px !important;
+    padding: 20px !important;
+    margin: 10px !important;
 }}
 
 .css-1d391kg, .css-163ttbj, [data-testid="stSidebar"] > div:first-child {{
     background: rgba(10, 10, 20, 0.85) !important;
     backdrop-filter: blur(10px) !important;
     border-right: 1px solid rgba(255,255,255,0.15) !important;
-}}
-
-.intro-header {{
-    background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 100%);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 30px;
-    padding: 50px 40px;
-    margin: 20px 0 40px 0;
-    text-align: center;
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}}
-
-.intro-header h1 {{
-    font-size: 4rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
-    letter-spacing: 2px;
-}}
-
-.intro-header p {{
-    color: rgba(255,255,255,0.95);
-    font-size: 1.5rem;
-    margin-top: 15px;
-    font-weight: 300;
-}}
-
-.developer-badge {{
-    display: inline-block;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 50px;
-    padding: 12px 30px;
-    margin-top: 25px;
-}}
-
-.developer-badge p {{
-    color: white;
-    margin: 0;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
 }}
 
 .custom-card {{
@@ -131,6 +60,7 @@ st.markdown(f"""
 .custom-card h5, .custom-card h6, .custom-card p, .custom-card span, 
 .custom-card div {{
     color: #ffffff !important;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3) !important;
 }}
 
 .stButton > button {{
@@ -140,6 +70,7 @@ st.markdown(f"""
     border-radius: 12px !important;
     padding: 12px 24px !important;
     font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
     border: 1px solid rgba(255,255,255,0.2) !important;
     transition: all 0.3s ease !important;
 }}
@@ -147,6 +78,7 @@ st.markdown(f"""
 .stButton > button:hover {{
     transform: translateY(-3px) !important;
     box-shadow: 0 8px 20px rgba(74, 85, 104, 0.4) !important;
+    background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%) !important;
 }}
 
 .stTabs [data-baseweb="tab-list"] {{
@@ -164,15 +96,28 @@ st.markdown(f"""
     padding: 12px 24px;
     border: 1px solid rgba(255,255,255,0.15);
     font-weight: 500;
+    transition: all 0.3s ease;
 }}
 
 .stTabs [aria-selected="true"] {{
     background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%) !important;
+    color: white !important;
+    border: none;
+    box-shadow: 0 4px 12px rgba(74, 85, 104, 0.3);
+}}
+
+.stSelectbox, .stDropdown {{
+    background: rgba(30, 35, 50, 0.8);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
 }}
 
 .stSelectbox label, .stDropdown label {{
     color: #ffffff !important;
     font-weight: 600 !important;
+    font-size: 1rem !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
 }}
 
 .stSelectbox > div > div {{
@@ -184,10 +129,17 @@ st.markdown(f"""
 
 h1, h2, h3, h4, h5, h6 {{
     color: #ffffff !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
+    letter-spacing: 0.5px !important;
+}}
+
+.stMarkdown {{
+    color: #ffffff !important;
 }}
 
 .stMarkdown p, .stMarkdown span {{
     color: rgba(255,255,255,0.95) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
 }}
 
 .stMetric {{
@@ -203,12 +155,14 @@ h1, h2, h3, h4, h5, h6 {{
     color: rgba(255,255,255,0.9) !important;
     font-size: 0.9rem !important;
     text-transform: uppercase !important;
+    letter-spacing: 1px !important;
 }}
 
 .stMetric div {{
     color: #ffffff !important;
     font-size: 1.8rem !important;
     font-weight: 700 !important;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3) !important;
 }}
 
 .dataframe, .stDataFrame {{
@@ -223,12 +177,42 @@ h1, h2, h3, h4, h5, h6 {{
     color: #ffffff !important;
     background: transparent !important;
     border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    padding: 12px !important;
 }}
 
 .stDataFrame th {{
     background: rgba(74, 85, 104, 0.3) !important;
     color: white !important;
     font-weight: 600 !important;
+}}
+
+.stSuccess, .stInfo {{
+    background: rgba(30, 35, 50, 0.8) !important;
+    backdrop-filter: blur(8px) !important;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    border-radius: 12px !important;
+}}
+
+.footer {{
+    text-align: center;
+    color: rgba(255,255,255,0.9) !important;
+    padding: 25px;
+    font-size: 14px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    margin-top: 30px;
+}}
+
+.developer {{
+    background: linear-gradient(135deg, rgba(160, 174, 192, 0.2) 0%, rgba(113, 128, 150, 0.2) 100%) !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 20px !important;
+    border-radius: 16px !important;
+    margin-top: 25px !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
 }}
 
 .stRadio > div {{
@@ -245,11 +229,8 @@ h1, h2, h3, h4, h5, h6 {{
     padding: 8px !important;
 }}
 
-.stNumberInput > div > div > input {{
-    background: rgba(40, 45, 60, 0.9) !important;
+.css-1wrcr25, .css-1vq4p4l {{
     color: white !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-    border-radius: 8px !important;
 }}
 
 hr {{
@@ -263,16 +244,25 @@ hr {{
     color: white !important;
 }}
 
-.watermark {{
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    opacity: 0.2;
-    z-index: 1000;
-    pointer-events: none;
-    font-size: 12px;
-    color: white;
-    transform: rotate(-5deg);
+.stNumberInput > div > div > input {{
+    background: rgba(40, 45, 60, 0.9) !important;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    border-radius: 8px !important;
+}}
+
+div[data-testid="stMetric"]:nth-of-type(1) {{
+    background: linear-gradient(135deg, rgba(160, 174, 192, 0.3) 0%, rgba(113, 128, 150, 0.3) 100%) !important;
+    border: 1px solid rgba(160, 174, 192, 0.5) !important;
+}}
+
+div[data-testid="stMetric"]:nth-of-type(1) label {{
+    color: #E2E8F0 !important;
+}}
+
+div[data-testid="stMetric"]:nth-of-type(1) div {{
+    color: #CBD5E0 !important;
+    text-shadow: 1px 1px 3px rgba(160,174,192,0.3) !important;
 }}
 </style>
 """, unsafe_allow_html=True)
@@ -287,221 +277,215 @@ def load_data():
     files = {}
     try:
         files['main'] = pd.read_csv('fortune500_cleaned.csv')
-        st.sidebar.success(f"✅ Main: {len(files['main']):,} rows")
+        st.sidebar.success(f"Main: {len(files['main']):,} rows")
     except:
         files['main'] = pd.DataFrame()
-        st.sidebar.warning("⚠️ Main data file not found")
     try:
         files['pred2024'] = pd.read_csv('fortune500_2024_predictions.csv')
-        st.sidebar.success(f"✅ 2024: {len(files['pred2024']):,} rows")
+        st.sidebar.success(f"2024: {len(files['pred2024']):,} rows")
     except:
         files['pred2024'] = pd.DataFrame()
     try:
         files['models'] = pd.read_csv('fortune500_models_performance.csv')
-        st.sidebar.success(f"✅ Models: {len(files['models'])} models")
+        st.sidebar.success(f"Models: {len(files['models'])} models")
     except:
         files['models'] = pd.DataFrame()
     try:
         files['test'] = pd.read_csv('fortune500_test_predictions.csv')
-        st.sidebar.success(f"✅ Test: {len(files['test']):,} rows")
+        st.sidebar.success(f"Test: {len(files['test']):,} rows")
     except:
         files['test'] = pd.DataFrame()
     return files
 
+data = load_data()
+df = data['main']
+
+if df.empty:
+    st.error(_("Main data file not found!", "ملف البيانات الرئيسي غير موجود!"))
+    st.stop()
+
+df['profit_margin'] = (df['profit_mil'] / df['revenue_mil']) * 100
+
+colors = {
+    'primary': '#4A5568',
+    'secondary': '#2D3748',
+    'accent1': '#A0AEC0',
+    'accent2': '#718096',
+    'accent3': '#4A5568',
+    'success': '#48BB78',
+    'danger': '#F56565',
+    'warning': '#ECC94B',
+    'info': '#A0AEC0',
+    'light': '#F7FAFC',
+    'dark': '#1A202C',
+    'gray1': '#CBD5E0',
+    'gray2': '#E2E8F0',
+    'gray3': '#EDF2F7'
+}
+
+st.markdown(f"""
+<div style="background: linear-gradient(135deg, rgba(45, 55, 72, 0.95) 0%, rgba(26, 32, 44, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            padding: 40px; 
+            border-radius: 25px; 
+            margin-bottom: 30px; 
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+    <h1 style="color: white; margin: 0; font-size: 3.2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-weight: 700; letter-spacing: 1px;">
+        {_('Fortune 500 Analytics Dashboard', 'لوحة تحليل Fortune 500')}
+    </h1>
+    <p style="color: rgba(255,255,255,0.95); margin-top: 15px; font-size: 1.4rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+        {_('1996-2024 Analysis & Predictions', 'تحليل وتوقعات 1996-2024')}
+    </p>
+    <div style="background: rgba(160, 174, 192, 0.2); 
+                backdrop-filter: blur(8px);
+                padding: 15px; 
+                border-radius: 15px; 
+                margin-top: 25px; 
+                border: 1px solid rgba(160, 174, 192, 0.5);
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;">
+        <p style="color: white; margin: 0; font-size: 1.2rem; font-weight: 500;">
+            {_('Developed by: Mohammad Naser', 'تم التطوير بواسطة: محمد زكريا ناصر')}
+        </p>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
 with st.sidebar:
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, rgba(45, 55, 72, 0.3) 0%, rgba(26, 32, 44, 0.3) 100%);
+    st.markdown(f"""
+    <div style="background: linear-gradient(135deg, rgba(45, 55, 72, 0.25) 0%, rgba(26, 32, 44, 0.25) 100%);
                 backdrop-filter: blur(12px);
                 padding: 25px; 
                 border-radius: 20px; 
                 margin-bottom: 25px;
-                border: 1px solid rgba(255,255,255,0.2);
-                text-align: center;">
-        <h3 style="color: white; margin: 0 0 15px 0; font-size: 1.5rem;">⚡ CONTROL PANEL</h3>
-        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #4A5568, #2D3748); border-radius: 50%; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; border: 3px solid #A0AEC0;">
-            <span style="font-size: 3rem;">👨‍💻</span>
-        </div>
-        <p style="color: white; font-size: 1.3rem; margin: 0; font-weight: 600;">Mohammad Naser</p>
-        <p style="color: #A0AEC0; font-size: 1rem; margin: 5px 0;">Original Developer</p>
-        <hr style="margin: 15px 0; opacity: 0.3;">
-        <p style="color: #A0AEC0; font-size: 0.9rem;">© 2024 All Rights Reserved</p>
-        <p style="color: #718096; font-size: 0.8rem;">Developed from scratch</p>
+                border: 1px solid rgba(255,255,255,0.2);">
+        <h3 style="color: white; margin-top: 0; font-size: 1.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+            {_('Control Panel', 'لوحة التحكم')}
+        </h3>
+        <p style="color: rgba(255,255,255,0.9); margin-bottom: 0; font-size: 1rem;">
+            {_('Developer: Mohammad Naser', 'المطور: محمد زكريا ناصر')}
+        </p>
+        <p style="color: rgba(255,255,255,0.7); margin-bottom: 0; font-size: 0.9rem;">
+            {_('Data Analyst', 'محلل بيانات')}
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
     menu = st.radio(
         _("Select Analysis", "اختر التحليل"),
         [
-            _("📅 Year Analysis", "📅 تحليل السنوات"),
-            _("🏢 Company Analysis", "🏢 تحليل الشركات"),
-            _("📈 Year Comparison", "📈 مقارنة السنوات"),
-            _("🤖 Predictions & Models", "🤖 التوقعات والنماذج"),
-            _("📋 Data Overview", "📋 نظرة عامة"),
-            _("ℹ️ About Developer", "ℹ️ عن المطور")
+            _("Year Analysis", "تحليل السنوات"),
+            _("Company Analysis", "تحليل الشركات"),
+            _("Year Comparison", "مقارنة السنوات"),
+            _("Predictions & Models", "التوقعات والنماذج"),
+            _("Data Overview", "نظرة عامة")
         ]
     )
 
-data = load_data()
-df = data['main']
-
-st.markdown("""
-<div class="intro-header">
-    <h1>FORTUNE 500</h1>
-    <p>Executive Analytics Dashboard | 1996-2024</p>
-    <div class="developer-badge">
-        <p>⚡ Developed by Mohammad Zakaria Naser ⚡</p>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-if df.empty:
-    st.error(_("⚠️ Main data file not found! Please check if fortune500_cleaned.csv exists.", 
-               "⚠️ ملف البيانات الرئيسي غير موجود! الرجاء التأكد من وجود الملف."))
-    st.stop()
-
-df['profit_margin'] = (df['profit_mil'] / df['revenue_mil']) * 100
-df['revenue_bil'] = df['revenue_mil'] / 1000
-df['profit_bil'] = df['profit_mil'] / 1000
-
-# ==================== YEAR ANALYSIS ====================
-if menu == _("📅 Year Analysis", "📅 تحليل السنوات"):
+if menu == _("Year Analysis", "تحليل السنوات"):
     st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-    st.header(_("📅 Year Analysis", "📅 تحليل السنوات"))
-    
+    st.header(_("Year Analysis", "تحليل السنوات"))
     col1, col2 = st.columns([3,1])
     with col1:
         year = st.selectbox(_("Select Year", "اختر السنة"), sorted(df['year'].unique(), reverse=True))
     with col2:
         top_n = st.number_input(_("Companies", "الشركات"), 5, 50, 15)
-    
     df_year = df[df['year'] == year]
-    
     if not df_year.empty:
         col1, col2, col3, col4 = st.columns(4)
         with col1:
             st.metric(_("Companies", "الشركات"), f"{len(df_year):,}")
         with col2:
-            st.metric(_("Total Revenue", "إجمالي الإيرادات"), f"${df_year['revenue_bil'].sum():,.1f}B")
+            st.metric(_("Total Revenue", "إجمالي الإيرادات"), f"${df_year['revenue_mil'].sum():,.0f}M")
         with col3:
-            st.metric(_("Avg Revenue", "متوسط الإيرادات"), f"${df_year['revenue_bil'].mean():,.1f}B")
+            st.metric(_("Avg Revenue", "متوسط الإيرادات"), f"${df_year['revenue_mil'].mean():,.0f}M")
         with col4:
             st.metric(_("Avg Margin", "متوسط الهامش"), f"{df_year['profit_margin'].mean():.1f}%")
-        
-        tabs = st.tabs([
-            _("🏆 Top Companies", "🏆 أفضل الشركات"), 
-            _("📊 Distribution", "📊 التوزيع"), 
-            _("🏭 Industries", "🏭 الصناعات")
-        ])
-        
+        tabs = st.tabs([_("Top Companies", "أفضل الشركات"), _("Revenue Distribution", "توزيع الإيرادات"), _("Industry Analysis", "تحليل الصناعات")])
         with tabs[0]:
             top = df_year.nlargest(top_n, 'revenue_mil')
-            fig = px.bar(top, x='revenue_bil', y='name', orientation='h',
+            fig = px.bar(top, x='revenue_mil', y='name', orientation='h',
                         title=f"{_('Top', 'أفضل')} {top_n} {_('Companies', 'شركة')} - {year}",
-                        color='revenue_bil', color_continuous_scale='viridis')
+                        color='revenue_mil', color_continuous_scale='gray')
             fig.update_layout(height=500, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                             font=dict(color='white', size=12), title_font_color='white')
             st.plotly_chart(fig, use_container_width=True)
-            st.dataframe(top[['rank','name','revenue_bil','profit_bil','profit_margin','industry']], 
-                        use_container_width=True)
-        
+            st.dataframe(top[['rank','name','revenue_mil','profit_mil','profit_margin','industry']], use_container_width=True)
         with tabs[1]:
-            fig = px.histogram(df_year, x='revenue_bil', nbins=50, 
-                              title=_("Revenue Distribution (Billions $)", "توزيع الإيرادات (بالمليارات)"))
+            fig = px.histogram(df_year, x='revenue_mil', nbins=50, title=_("Revenue Distribution", "توزيع الإيرادات"))
             fig.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                             height=400, font=dict(color='white'), title_font_color='white')
             st.plotly_chart(fig, use_container_width=True)
-        
         with tabs[2]:
-            ind = df_year.groupby('industry').agg({
-                'revenue_bil': 'sum',
-                'profit_margin': 'mean'
-            }).sort_values('revenue_bil', ascending=False).head(15)
-            
+            ind = df_year.groupby('industry').agg({'revenue_mil':'sum','profit_margin':'mean'}).sort_values('revenue_mil', ascending=False).head(15)
             col1, col2 = st.columns(2)
             with col1:
-                fig1 = px.bar(ind.reset_index(), x='revenue_bil', y='industry', orientation='h',
-                            title=_("Revenue by Industry (B$)", "الإيرادات حسب الصناعة"),
-                            color='revenue_bil', color_continuous_scale='viridis')
+                fig1 = px.bar(ind.reset_index(), x='revenue_mil', y='industry', orientation='h',
+                            title=_("Revenue by Industry", "الإيرادات حسب الصناعة"),
+                            color='revenue_mil', color_continuous_scale='gray')
                 fig1.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                                  height=500, font=dict(color='white'), title_font_color='white')
                 st.plotly_chart(fig1, use_container_width=True)
             with col2:
                 fig2 = px.bar(ind.reset_index(), x='profit_margin', y='industry', orientation='h',
                             title=_("Margin by Industry", "الهامش حسب الصناعة"),
-                            color='profit_margin', color_continuous_scale='viridis')
+                            color='profit_margin', color_continuous_scale='gray')
                 fig2.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                                  height=500, font=dict(color='white'), title_font_color='white')
                 st.plotly_chart(fig2, use_container_width=True)
-    
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ==================== COMPANY ANALYSIS ====================
-elif menu == _("🏢 Company Analysis", "🏢 تحليل الشركات"):
+elif menu == _("Company Analysis", "تحليل الشركات"):
     st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-    st.header(_("🏢 Company Analysis", "🏢 تحليل الشركات"))
-    
+    st.header(_("Company Analysis", "تحليل الشركات"))
     company = st.selectbox(_("Select Company", "اختر الشركة"), sorted(df['name'].unique()))
     df_comp = df[df['name'] == company].sort_values('year')
-    
     if not df_comp.empty:
         latest = df_comp.iloc[-1]
-        
         col1, col2, col3, col4 = st.columns(4)
         with col1:
             st.metric(_("Years in List", "السنوات في القائمة"), len(df_comp))
         with col2:
-            st.metric(_("Latest Revenue", "آخر إيرادات"), f"${latest['revenue_bil']:,.1f}B")
+            st.metric(_("Latest Revenue", "آخر إيرادات"), f"${latest['revenue_mil']:,.0f}M")
         with col3:
             st.metric(_("Latest Rank", "آخر ترتيب"), f"#{int(latest['rank'])}")
         with col4:
             st.metric(_("Latest Margin", "آخر هامش"), f"{latest['profit_margin']:.1f}%")
-        
         col1, col2 = st.columns(2)
         with col1:
-            fig1 = px.line(df_comp, x='year', y='revenue_bil', 
-                          title=_("Revenue Trend (Billions $)", "اتجاه الإيرادات (بالمليارات)"), 
-                          markers=True)
-            fig1.update_traces(line=dict(color='#4A5568', width=3), 
-                              marker=dict(color='#4A5568', size=8))
+            fig1 = px.line(df_comp, x='year', y='revenue_mil', title=_("Revenue Trend", "اتجاه الإيرادات"), markers=True)
+            fig1.update_traces(line=dict(color='#A0AEC0', width=3), marker=dict(color='#A0AEC0', size=8))
             fig1.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                              height=400, font=dict(color='white'), title_font_color='white')
             st.plotly_chart(fig1, use_container_width=True)
         with col2:
-            fig2 = px.line(df_comp, x='year', y='rank', 
-                          title=_("Rank Trend", "اتجاه الترتيب"), 
-                          markers=True)
-            fig2.update_traces(line=dict(color='#718096', width=3), 
-                              marker=dict(color='#718096', size=8))
+            fig2 = px.line(df_comp, x='year', y='rank', title=_("Rank Trend", "اتجاه الترتيب"), markers=True)
+            fig2.update_traces(line=dict(color='#718096', width=3), marker=dict(color='#718096', size=8))
             fig2.update_yaxes(autorange="reversed")
             fig2.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                              height=400, font=dict(color='white'), title_font_color='white')
             st.plotly_chart(fig2, use_container_width=True)
-        
         st.subheader(_("Historical Data", "البيانات التاريخية"))
-        st.dataframe(df_comp[['year','rank','revenue_bil','profit_bil','profit_margin']], 
-                    use_container_width=True)
-    
+        st.dataframe(df_comp[['year','rank','revenue_mil','profit_mil','profit_margin']], use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ==================== YEAR COMPARISON ====================
-elif menu == _("📈 Year Comparison", "📈 مقارنة السنوات"):
+elif menu == _("Year Comparison", "مقارنة السنوات"):
     st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-    st.header(_("📈 Year Comparison", "📈 مقارنة السنوات"))
-    
+    st.header(_("Year Comparison", "مقارنة السنوات"))
     years = sorted(df['year'].unique(), reverse=True)
     col1, col2 = st.columns(2)
     with col1:
         y1 = st.selectbox(_("First Year", "السنة الأولى"), years, index=3)
     with col2:
         y2 = st.selectbox(_("Second Year", "السنة الثانية"), years, index=0)
-    
     if y1 != y2:
         d1 = df[df['year'] == y1]
         d2 = df[df['year'] == y2]
-        
-        rev_growth = ((d2['revenue_bil'].sum() - d1['revenue_bil'].sum()) / d1['revenue_bil'].sum()) * 100
-        avg_growth = ((d2['revenue_bil'].mean() - d1['revenue_bil'].mean()) / d1['revenue_bil'].mean()) * 100
-        
+        rev_growth = ((d2['revenue_mil'].sum() - d1['revenue_mil'].sum()) / d1['revenue_mil'].sum()) * 100
+        avg_growth = ((d2['revenue_mil'].mean() - d1['revenue_mil'].mean()) / d1['revenue_mil'].mean()) * 100
         col1, col2, col3 = st.columns(3)
         with col1:
             st.metric(_("Revenue Growth", "نمو الإيرادات"), f"{rev_growth:+.1f}%")
@@ -509,36 +493,32 @@ elif menu == _("📈 Year Comparison", "📈 مقارنة السنوات"):
             st.metric(_("Avg Growth", "متوسط النمو"), f"{avg_growth:+.1f}%")
         with col3:
             st.metric(_("Companies Change", "تغير الشركات"), f"{len(d2)-len(d1):+d}")
-        
         comp = pd.DataFrame({
             _("Year", "السنة"): [str(y1), str(y2)],
-            _("Total Revenue (B$)", "إجمالي الإيرادات"): [d1['revenue_bil'].sum(), d2['revenue_bil'].sum()],
-            _("Avg Revenue (B$)", "متوسط الإيرادات"): [d1['revenue_bil'].mean(), d2['revenue_bil'].mean()],
+            _("Total Revenue", "إجمالي الإيرادات"): [d1['revenue_mil'].sum(), d2['revenue_mil'].sum()],
+            _("Avg Revenue", "متوسط الإيرادات"): [d1['revenue_mil'].mean(), d2['revenue_mil'].mean()],
             _("Companies", "الشركات"): [len(d1), len(d2)]
         })
-        
         fig = go.Figure()
         fig.add_trace(go.Bar(name=_("Total Revenue", "إجمالي الإيرادات"), 
-                            x=comp[_("Year", "السنة")], y=comp[_("Total Revenue (B$)", "إجمالي الإيرادات")],
-                            marker_color='#4A5568'))
+                            x=comp[_("Year", "السنة")], y=comp[_("Total Revenue", "إجمالي الإيرادات")],
+                            marker_color='#A0AEC0'))
         fig.add_trace(go.Bar(name=_("Avg Revenue", "متوسط الإيرادات"), 
-                            x=comp[_("Year", "السنة")], y=comp[_("Avg Revenue (B$)", "متوسط الإيرادات")],
+                            x=comp[_("Year", "السنة")], y=comp[_("Avg Revenue", "متوسط الإيرادات")],
                             marker_color='#718096'))
         fig.update_layout(barmode='group', height=400, 
                          plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                          font=dict(color='white', size=12), title_font_color='white',
                          legend_font_color='white')
         st.plotly_chart(fig, use_container_width=True)
-    
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ==================== PREDICTIONS & MODELS ====================
-elif menu == _("🤖 Predictions & Models", "🤖 التوقعات والنماذج"):
+elif menu == _("Predictions & Models", "التوقعات والنماذج"):
     st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-    st.header(_("🤖 Predictions & AI Models", "🤖 التوقعات والنماذج الذكية"))
+    st.header(_("Predictions & AI Models", "التوقعات والنماذج الذكية"))
     
     if not data['pred2024'].empty:
-        st.subheader(_("📊 2024 Predictions", "📊 توقعات 2024"))
+        st.subheader(_("2024 Predictions", "توقعات 2024"))
         df_pred = data['pred2024']
         
         revenue_col = None
@@ -569,7 +549,7 @@ elif menu == _("🤖 Predictions & Models", "🤖 التوقعات والنما�
             df_pred_sorted = df_pred.sort_values(revenue_col, ascending=False).head(20)
             fig = px.bar(df_pred_sorted, x=revenue_col, y=name_col, orientation='h',
                         title=_("Top 20 Predicted Companies 2024", "أفضل 20 شركة متوقعة 2024"),
-                        color=revenue_col, color_continuous_scale='viridis')
+                        color=revenue_col, color_continuous_scale='gray')
             fig.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                             height=500, font=dict(color='white'), title_font_color='white')
             st.plotly_chart(fig, use_container_width=True)
@@ -582,7 +562,7 @@ elif menu == _("🤖 Predictions & Models", "🤖 التوقعات والنما�
         st.info(_("2024 predictions file not available", "ملف توقعات 2024 غير متوفر"))
     
     if not data['models'].empty:
-        st.subheader(_("📈 Model Performance", "📈 أداء النماذج"))
+        st.subheader(_("Model Performance", "أداء النماذج"))
         df_models = data['models']
         
         model_col = None
@@ -599,7 +579,7 @@ elif menu == _("🤖 Predictions & Models", "🤖 التوقعات والنما�
             if model_col:
                 fig = px.bar(df_models, x=model_col, y=accuracy_col, 
                            title=_("Model Accuracy", "دقة النماذج"),
-                           color=accuracy_col, color_continuous_scale='viridis')
+                           color=accuracy_col, color_continuous_scale='gray')
                 fig.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                                 height=400, xaxis_tickangle=45, font=dict(color='white'), 
                                 title_font_color='white')
@@ -607,7 +587,7 @@ elif menu == _("🤖 Predictions & Models", "🤖 التوقعات والنما�
             else:
                 fig = px.bar(df_models, y=accuracy_col, 
                            title=_("Model Accuracy", "دقة النماذج"),
-                           color=accuracy_col, color_continuous_scale='viridis')
+                           color=accuracy_col, color_continuous_scale='gray')
                 fig.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                                 height=400, font=dict(color='white'), title_font_color='white')
                 st.plotly_chart(fig, use_container_width=True)
@@ -615,7 +595,7 @@ elif menu == _("🤖 Predictions & Models", "🤖 التوقعات والنما�
         st.dataframe(df_models, use_container_width=True)
     
     if not data['test'].empty:
-        st.subheader(_("🧪 Test Predictions", "🧪 توقعات الاختبار"))
+        st.subheader(_("Test Predictions", "توقعات الاختبار"))
         df_test = data['test']
         
         actual_col = None
@@ -632,7 +612,7 @@ elif menu == _("🤖 Predictions & Models", "🤖 التوقعات والنما�
             fig = px.scatter(df_test.head(100), x=actual_col, y=predicted_col,
                            title=_("Actual vs Predicted", "الفعلية مقابل المتوقعة"),
                            labels={actual_col: _("Actual", "فعلية"), predicted_col: _("Predicted", "متوقعة")})
-            fig.update_traces(marker=dict(color='#4A5568', size=5))
+            fig.update_traces(marker=dict(color='#A0AEC0', size=5))
             fig.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                             height=500, font=dict(color='white'), title_font_color='white')
             st.plotly_chart(fig, use_container_width=True)
@@ -641,38 +621,31 @@ elif menu == _("🤖 Predictions & Models", "🤖 التوقعات والنما�
     
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ==================== DATA OVERVIEW ====================
-elif menu == _("📋 Data Overview", "📋 نظرة عامة"):
+else:
     st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-    st.header(_("📋 Data Overview", "📋 نظرة عامة"))
-    
+    st.header(_("Data Overview", "نظرة عامة"))
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric(_("Total Years", "إجمالي السنوات"), df['year'].nunique())
     with col2:
         st.metric(_("Unique Companies", "الشركات الفريدة"), df['name'].nunique())
     with col3:
-        st.metric(_("Total Revenue", "إجمالي الإيرادات"), f"${df['revenue_bil'].sum()/1000:,.1f}T")
+        st.metric(_("Total Revenue", "إجمالي الإيرادات"), f"${df['revenue_mil'].sum()/1000000:,.1f}T")
     with col4:
-        avg_growth = df.groupby('year')['revenue_bil'].mean().pct_change().mean() * 100
-        st.metric(_("Avg Annual Growth", "متوسط النمو السنوي"), f"{avg_growth:.1f}%")
+        st.metric(_("Avg Annual Growth", "متوسط النمو السنوي"), f"{df.groupby('year')['revenue_mil'].mean().pct_change().mean()*100:.1f}%")
     
-    yearly = df.groupby('year').agg({
-        'revenue_bil': 'mean',
-        'profit_bil': 'mean',
-        'profit_margin': 'mean'
-    }).reset_index()
+    yearly = df.groupby('year').agg({'revenue_mil':'mean','profit_mil':'mean','profit_margin':'mean'}).reset_index()
     
     fig = make_subplots(rows=3, cols=1, 
                        subplot_titles=(
-                           _("Average Revenue Trend (B$)", "اتجاه متوسط الإيرادات"),
-                           _("Average Profit Trend (B$)", "اتجاه متوسط الأرباح"),
+                           _("Average Revenue Trend", "اتجاه متوسط الإيرادات"),
+                           _("Average Profit Trend", "اتجاه متوسط الأرباح"),
                            _("Average Margin Trend", "اتجاه متوسط الهامش")
                        ))
     
-    fig.add_trace(go.Scatter(x=yearly['year'], y=yearly['revenue_bil'], 
-                            name=_("Revenue","الإيرادات"), line=dict(color='#4A5568', width=3)), row=1, col=1)
-    fig.add_trace(go.Scatter(x=yearly['year'], y=yearly['profit_bil'], 
+    fig.add_trace(go.Scatter(x=yearly['year'], y=yearly['revenue_mil'], 
+                            name=_("Revenue","الإيرادات"), line=dict(color='#A0AEC0', width=3)), row=1, col=1)
+    fig.add_trace(go.Scatter(x=yearly['year'], y=yearly['profit_mil'], 
                             name=_("Profit","الأرباح"), line=dict(color='#48BB78', width=3)), row=2, col=1)
     fig.add_trace(go.Scatter(x=yearly['year'], y=yearly['profit_margin'], 
                             name=_("Margin","الهامش"), line=dict(color='#ECC94B', width=3)), row=3, col=1)
@@ -682,89 +655,54 @@ elif menu == _("📋 Data Overview", "📋 نظرة عامة"):
                      font=dict(color='white', size=12), title_font_color='white',
                      legend_font_color='white')
     
-    fig.update_xaxes(gridcolor='rgba(255,255,255,0.1)', gridwidth=1)
-    fig.update_yaxes(gridcolor='rgba(255,255,255,0.1)', gridwidth=1)
+    fig.update_xaxes(gridcolor='rgba(255,255,255,0.1)', gridwidth=1, row=1, col=1)
+    fig.update_yaxes(gridcolor='rgba(255,255,255,0.1)', gridwidth=1, row=1, col=1)
+    fig.update_xaxes(gridcolor='rgba(255,255,255,0.1)', gridwidth=1, row=2, col=1)
+    fig.update_yaxes(gridcolor='rgba(255,255,255,0.1)', gridwidth=1, row=2, col=1)
+    fig.update_xaxes(gridcolor='rgba(255,255,255,0.1)', gridwidth=1, row=3, col=1)
+    fig.update_yaxes(gridcolor='rgba(255,255,255,0.1)', gridwidth=1, row=3, col=1)
     
     st.plotly_chart(fig, use_container_width=True)
     
-    top = df.groupby('name')['revenue_bil'].max().nlargest(15)
+    top = df.groupby('name')['revenue_mil'].max().nlargest(15)
     fig2 = px.bar(x=top.values, y=top.index, orientation='h',
                  title=_("Top 15 Companies All Time", "أفضل 15 شركة على الإطلاق"),
-                 color=top.values, color_continuous_scale='viridis')
+                 color=top.values, color_continuous_scale='gray')
     fig2.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', 
                       height=500, font=dict(color='white', size=12), title_font_color='white')
     st.plotly_chart(fig2, use_container_width=True)
     
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ==================== ABOUT DEVELOPER ====================
-else:
-    st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-    
-    col1, col2 = st.columns([1, 2])
-    
-    with col1:
-        st.markdown("""
-        <div style="text-align: center; padding: 20px;">
-            <div style="background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%); width: 220px; height: 220px; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 4px solid #A0AEC0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                <span style="font-size: 6rem;">👨‍💻</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown(f"""
-        <div style="padding: 20px;">
-            <h2 style="color: white; margin-bottom: 20px; font-size: 2.5rem;">{_('Developer Information', 'معلومات المطور')}</h2>
-            <p style="color: #A0AEC0; font-size: 1.8rem; margin-bottom: 30px;">
-                <strong style="color: white;">Mohammad Zakaria Naser</strong>
-            </p>
-            <p style="color: white; margin-bottom: 15px; font-size: 1.2rem;">
-                {_('This Fortune 500 Analytics Dashboard was developed from scratch by Mohammad Naser in 2024.', 'تم تطوير لوحة تحليل Fortune 500 هذه من الصفر بواسطة محمد ناصر في 2024.')}
-            </p>
-            <p style="color: white; margin-bottom: 15px; font-size: 1.2rem;">
-                {_('All code, design, and functionality are original work.', 'جميع الكود والتصميم والوظائف هي عمل أصلي.')}
-            </p>
-            <div style="background: rgba(160, 174, 192, 0.1); border-radius: 20px; padding: 25px; margin-top: 25px; border: 1px solid rgba(255,255,255,0.1);">
-                <p style="color: #A0AEC0; margin: 10px 0; font-size: 1.1rem;">📧 mohammad.naser@email.com</p>
-                <p style="color: #A0AEC0; margin: 10px 0; font-size: 1.1rem;">🔗 github.com/mohammadnaser</p>
-                <p style="color: #A0AEC0; margin: 10px 0; font-size: 1.1rem;">📅 2024</p>
-                <p style="color: #A0AEC0; margin: 10px 0; font-size: 1.1rem;">📍 Palestine</p>
-            </div>
-            <hr style="margin: 30px 0; border-color: rgba(255,255,255,0.1);">
-            <p style="color: #A0AEC0; text-align: center; font-size: 1.1rem;">
-                © 2024 Mohammad Zakaria Naser. {_('All Rights Reserved.', 'جميع الحقوق محفوظة.')}
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
-
-st.markdown("""
-<div class="watermark">
-    MOHAMMAD NASER © 2024
-</div>
-""", unsafe_allow_html=True)
-
 st.markdown(f"""
-<div style="background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 100%);
-            backdrop-filter: blur(10px);
+<div style="background: linear-gradient(135deg, rgba(45, 55, 72, 0.9) 0%, rgba(26, 32, 44, 0.9) 100%);
+            backdrop-filter: blur(12px);
             border-radius: 20px;
             padding: 30px;
             margin-top: 40px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.2);">
-    <p style="color: white; font-size: 1.3rem; font-weight: 600;">FORTUNE 500 EXECUTIVE ANALYTICS</p>
-    <p style="color: #A0AEC0; font-size: 1.1rem; margin-top: 10px;">Developed by Mohammad Zakaria Naser</p>
-    <p style="color: #718096; font-size: 0.9rem; margin-top: 15px;">© 2024 All Rights Reserved | Original Work</p>
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;">
+    <p style="color: white; font-size: 1.3rem; margin-bottom: 15px; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+        <strong>{_('Fortune 500 Analytics Dashboard', 'لوحة تحليل Fortune 500')}</strong>
+    </p>
+    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 15px; flex-wrap: wrap;">
+        <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">
+            {_('Developed by: Mohammad Naser', 'تم التطوير بواسطة: محمد زكريا ناصر')}
+        </p>
+        <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">
+            {_('Data Analyst', 'محلل بيانات')}
+        </p>
+    </div>
+    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 15px; flex-wrap: wrap;">
+        <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem;">
+            1996-2024
+        </p>
+        <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem;">
+            {_('Powered by Streamlit & Plotly', 'بتقنية Streamlit و Plotly')}
+        </p>
+    </div>
+    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 10px;">
+        © 2024 {_('All Rights Reserved', 'جميع الحقوق محفوظة')}
+    </p>
 </div>
 """, unsafe_allow_html=True)
-
-# =============================================================================
-# FORTUNE 500 ANALYTICS DASHBOARD
-# Developed by: Mohammad Zakaria Naser
-# Date: 2024
-# Version: 1.0.0
-# This code is the original work of Mohammad Naser. All rights reserved.
-# Unauthorized copying, distribution, or modification is prohibited.
-# =============================================================================
