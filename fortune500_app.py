@@ -345,10 +345,10 @@ with st.sidebar:
     st.markdown(f"""
     <div class="developer-profile">
         <img src="data:image/jpeg;base64,{profile_image_base64}" class="developer-image" alt="Developer">
-        
+        <p>
         <div class="developer-title">Mohammad Naser</div>
         <div style="color: #A0AEC0; font-size: 0.8rem; margin-top: 5px;">
-        
+        </p>
             {('Data Analyst' ,'محلل بيانات')}
         </div>
     </div>
