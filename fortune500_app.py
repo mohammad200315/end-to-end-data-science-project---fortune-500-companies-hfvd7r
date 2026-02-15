@@ -666,7 +666,7 @@ else:
 st.markdown(f"""
 <div style="background: linear-gradient(135deg, rgba(45, 55, 72, 0.9) 0%, rgba(26, 32, 44, 0.9) 100%);
             backdrop-filter: blur(12px);
-            border-radius: 15px;
+            border-radius: 30px;
             padding: 10px;
             margin-top: 20px;
             border: 1px solid rgba(255,255,255,0.2);
