@@ -342,7 +342,7 @@ df['profit_bil'] = df['profit_mil'] / 1000
 
 # ==================== YEAR ANALYSIS ====================
 if menu == _("📅 Year Analysis", "📅 تحليل السنوات"):
-    st.markdown('<div class="custom-card">', unsafe_allow_html=True)
+    ##st.markdown('<div class="custom-card">', unsafe_allow_html=True)
     st.header(_("📅 Year Analysis", "📅 تحليل السنوات"))
     
     col1, col2 = st.columns([3,1])
