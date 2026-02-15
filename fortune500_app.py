@@ -35,10 +35,6 @@ if 'lang' not in st.session_state:
 if 'menu' not in st.session_state:
     st.session_state.menu = "📊 Year Analysis"
 
-# دالة لتبديل حالة الشريط الجانبي
-def toggle_sidebar():
-    st.session_state.sidebar_visible = not st.session_state.sidebar_visible
-
 st.markdown(f"""
 <style>
 /* إخفاء عناصر Streamlit الافتراضية */
@@ -78,8 +74,8 @@ header {{
     transition: all 0.3s ease !important;
 }}
 
-/* تنسيق زر التحكم بالشريط الجانبي - يبقى ظاهر دائماً */
-.sidebar-toggle-btn {{
+/* تنسيق السهم - دائري ويبقى ظاهر دائماً */
+.sidebar-arrow {{
     position: fixed !important;
     top: 20px !important;
     left: 20px !important;
@@ -101,11 +97,16 @@ header {{
     text-decoration: none !important;
 }}
 
-.sidebar-toggle-btn:hover {{
+.sidebar-arrow:hover {{
     transform: scale(1.1) !important;
     background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%) !important;
     border-color: white !important;
     box-shadow: 0 8px 25px rgba(0,0,0,0.7) !important;
+}}
+
+/* إخفاء أي أزرار أخرى */
+.stButton > button {{
+    display: none !important;
 }}
 
 /* تنسيق صورة المطور في الشريط الجانبي */
@@ -167,24 +168,6 @@ header {{
 .custom-card div {{
     color: #ffffff !important;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.3) !important;
-}}
-
-/* تنسيق الأزرار العادية */
-.stButton > button {{
-    background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 12px !important;
-    padding: 12px 24px !important;
-    font-weight: 600 !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-    transition: all 0.3s ease !important;
-}}
-
-.stButton > button:hover {{
-    transform: translateY(-3px) !important;
-    box-shadow: 0 8px 20px rgba(74, 85, 104, 0.4) !important;
-    background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%) !important;
 }}
 
 /* تنسيق التبويبات */
@@ -338,7 +321,6 @@ hr {{
 <script>
 function toggleSidebar() {{
     const sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
-    const mainContent = window.parent.document.querySelector('.main');
     const currentDisplay = window.getComputedStyle(sidebar).display;
     
     if (currentDisplay === 'none') {{
@@ -379,9 +361,9 @@ if (document.readyState === 'loading') {{
 </script>
 """, unsafe_allow_html=True)
 
-# ==================== زر التحكم بالشريط الجانبي (يظهر دائماً) ====================
+# ==================== السهم الدائري للتحكم بالشريط الجانبي ====================
 st.markdown("""
-<button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
+<button class="sidebar-arrow" onclick="toggleSidebar()">☰</button>
 """, unsafe_allow_html=True)
 
 # ==================== MAIN HEADER ====================
