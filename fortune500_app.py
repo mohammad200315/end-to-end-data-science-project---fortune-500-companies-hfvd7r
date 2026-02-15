@@ -27,6 +27,38 @@ profile_image_path = r"WhatsApp Image 2026-02-10 at 1.34.39 PM.jpeg"
 background_image_base64 = get_base64_of_image(background_image_path)
 profile_image_base64 = get_base64_of_image(profile_image_path)
 
+# JavaScript لإدارة حالة الشريط الجانبي
+st.markdown("""
+<script>
+function toggleSidebar() {
+    const sidebar = document.querySelector('[data-testid="stSidebar"]');
+    const mainContent = document.querySelector('.main');
+    
+    if (sidebar.style.display === 'none') {
+        sidebar.style.display = 'block';
+        mainContent.style.marginLeft = '21rem';
+        localStorage.setItem('sidebarState', 'expanded');
+    } else {
+        sidebar.style.display = 'none';
+        mainContent.style.marginLeft = '0';
+        localStorage.setItem('sidebarState', 'collapsed');
+    }
+}
+
+// استعادة حالة الشريط الجانبي عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebarState = localStorage.getItem('sidebarState');
+    const sidebar = document.querySelector('[data-testid="stSidebar"]');
+    const mainContent = document.querySelector('.main');
+    
+    if (sidebarState === 'collapsed') {
+        sidebar.style.display = 'none';
+        mainContent.style.marginLeft = '0';
+    }
+});
+</script>
+""", unsafe_allow_html=True)
+
 st.markdown(f"""
 <style>
 /* الحل النهائي لإظهار السهم */
@@ -39,6 +71,7 @@ footer {{visibility: hidden;}}
 header {{visibility: visible !important; background-color: transparent !important;}}
 .stApp header {{background-color: transparent !important;}}
 
+/* تنسيق زر السهم الجانبي */
 button[kind="header"] {{
     background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%) !important;
     color: white !important;
@@ -50,6 +83,7 @@ button[kind="header"] {{
     margin: 15px !important;
     transition: all 0.3s ease !important;
     z-index: 999999 !important;
+    cursor: pointer !important;
 }}
 
 button[kind="header"]:hover {{
@@ -57,6 +91,40 @@ button[kind="header"]:hover {{
     background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%) !important;
     border-color: white !important;
     box-shadow: 0 8px 25px rgba(0,0,0,0.7) !important;
+}}
+
+/* إضافة زر جانبي مخصص */
+.sidebar-toggle-btn {{
+    position: fixed !important;
+    top: 20px !important;
+    left: 20px !important;
+    z-index: 999999 !important;
+    background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+    border: 2px solid rgba(255,255,255,0.3) !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}}
+
+.sidebar-toggle-btn:hover {{
+    transform: scale(1.1) !important;
+    background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%) !important;
+    border-color: white !important;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.7) !important;
+}}
+
+/* تنسيق الشريط الجانبي */
+[data-testid="stSidebar"] {{
+    transition: all 0.3s ease !important;
 }}
 
 /* تنسيق خلفية التطبيق */
@@ -78,7 +146,7 @@ button[kind="header"]:hover {{
 
 /* تنسيق الشريط الجانبي */
 [data-testid="stSidebar"] > div:first-child {{
-    background: rgba(10, 10, 20, 0.85) !important;
+    background: rgba(10, 10, 20, 0.95) !important;
     backdrop-filter: blur(10px) !important;
     border-right: 1px solid rgba(255,255,255,0.15) !important;
 }}
@@ -305,6 +373,11 @@ hr {{
 </style>
 """, unsafe_allow_html=True)
 
+# إضافة زر جانبي للتحكم في الشريط الجانبي
+st.markdown("""
+<button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
+""", unsafe_allow_html=True)
+
 # ==================== SIDEBAR ====================
 with st.sidebar:
     st.markdown(f"""
@@ -385,6 +458,8 @@ st.markdown(f"""
             padding: 25px; 
             border-radius: 10px; 
             margin-bottom: 30px; 
+            margin-left: 30px;
+            margin-right: 30px;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.25);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
@@ -712,7 +787,7 @@ st.markdown(f"""
             backdrop-filter: blur(12px);
             border-radius: 35px;
             padding: 10px;
-            margin-top: 10px;
+            margin: 30px;
             border: 1px solid rgba(255,255,255,0.2);
             text-align: center;">
     <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 10px;">
