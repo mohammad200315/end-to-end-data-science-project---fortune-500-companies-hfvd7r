@@ -29,11 +29,30 @@ profile_image_base64 = get_base64_of_image(profile_image_path)
 
 st.markdown(f"""
 <style>
-/* إخفاء العناصر الزائدة مع الحفاظ على السهم */
+/* إخفاء العناصر الزائدة فقط */
 #MainMenu {{visibility: hidden;}}
 footer {{visibility: hidden;}}
 .stDeployButton {{display: none;}}
 .stAppToolbar {{display: none;}}
+
+/* إظهار السهم وجعله واضح */
+header {{visibility: visible !important;}}
+[data-testid="collapsedControl"] {{
+    visibility: visible !important;
+    background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%) !important;
+    color: white !important;
+    border-radius: 0 20px 20px 0 !important;
+    padding: 10px !important;
+    margin-top: 10px !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+    z-index: 99999 !important;
+}}
+
+[data-testid="collapsedControl"]:hover {{
+    background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%) !important;
+    transform: scale(1.05) !important;
+}}
 
 /* تنسيق خلفية التطبيق */
 .stApp {{
