@@ -10,7 +10,7 @@ warnings.filterwarnings('ignore')
 
 st.set_page_config(
     page_title="Fortune 500 Analytics Dashboard",
-    page_icon="WhatsApp Image 2026-02-11 at 3.17.53 PM.jpeg",
+    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -20,13 +20,17 @@ def get_base64_of_image(image_path):
         data = f.read()
     return base64.b64encode(data).decode()
 
-image_path = r"WhatsApp Image 2026-02-11 at 3.32.24 PM.jpeg"
-image_base64 = get_base64_of_image(image_path)
+# تحميل الصور
+background_image_path = r"WhatsApp Image 2026-02-11 at 3.32.24 PM.jpeg"
+profile_image_path = r"WhatsApp Image 2026-02-11 at 3.17.53 PM.jpeg"  # صورتك الشخصية
+
+background_image_base64 = get_base64_of_image(background_image_path)
+profile_image_base64 = get_base64_of_image(profile_image_path)
 
 st.markdown(f"""
 <style>
 .stApp {{
-    background-image: url("data:image/jpeg;base64,{image_base64}");
+    background-image: url("data:image/jpeg;base64,{background_image_base64}");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -44,6 +48,66 @@ st.markdown(f"""
     background: rgba(10, 10, 20, 0.85) !important;
     backdrop-filter: blur(10px) !important;
     border-right: 1px solid rgba(255,255,255,0.15) !important;
+}}
+
+/* تنسيق صورة المطور في الشريط الجانبي */
+.developer-profile {{
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(45, 55, 72, 0.3) 0%, rgba(26, 32, 44, 0.3) 100%);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 1s ease;
+}}
+
+.developer-image {{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    border: 3px solid #A0AEC0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    object-fit: cover;
+}}
+
+.developer-image:hover {{
+    transform: scale(1.05);
+    border-color: white;
+    box-shadow: 0 12px 25px rgba(160, 174, 192, 0.4);
+}}
+
+.developer-name {{
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}}
+
+.developer-title {{
+    color: #A0AEC0;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}}
+
+.developer-badge {{
+    display: inline-block;
+    background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+}}
+
+@keyframes fadeIn {{
+    from {{ opacity: 0; transform: translateY(-20px); }}
+    to {{ opacity: 1; transform: translateY(0); }}
 }}
 
 .custom-card {{
@@ -264,52 +328,86 @@ div[data-testid="stMetric"]:nth-of-type(1) div {{
     color: #CBD5E0 !important;
     text-shadow: 1px 1px 3px rgba(160,174,192,0.3) !important;
 }}
+
+/* تنسيق للشريط الجانبي */
+.sidebar-section {{
+    background: rgba(20, 25, 40, 0.4);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+}}
+
+.sidebar-title {{
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: center;
+}}
 </style>
 """, unsafe_allow_html=True)
 
 # ==================== TRANSLATION FUNCTION ====================
-# تعريف دالة الترجمة أولاً
 def _(en, ar):
     return en if lang == "English" else ar
 
 # ==================== SIDEBAR ====================
 with st.sidebar:
-    # LANGUAGE SELECTION FIRST (لأن دالة الترجمة تحتاجها)
-    lang = st.radio("Language / اللغة", ["English", "العربية"], index=0, key="language")
-    
+    # صورة المطور - تظهر في أعلى الشريط الجانبي
     st.markdown(f"""
-    <div style="background: linear-gradient(135deg, rgba(45, 55, 72, 0.25) 0%, rgba(26, 32, 44, 0.25) 100%);
-                backdrop-filter: blur(12px);
-                padding: 25px; 
-                border-radius: 20px; 
-                margin-bottom: 25px;
-                border: 1px solid rgba(255,255,255,0.2);">
-        <h3 style="color: white; margin-top: 0; font-size: 1.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
-            {_('Control Panel', 'لوحة التحكم')}
-        </h3>
-        <p style="color: rgba(255,255,255,0.9); margin-bottom: 0; font-size: 1rem;">
-            {_('Developer: Mohammad Naser', 'المطور: محمد زكريا ناصر')}
-        </p>
-        <p style="color: rgba(255,255,255,0.7); margin-bottom: 0; font-size: 0.9rem;">
-            {_('Data Analyst', 'محلل بيانات')}
-        </p>
+    <div class="developer-profile">
+        <img src="data:image/jpeg;base64,{profile_image_base64}" class="developer-image" alt="Developer">
+        <div class="developer-name">محمد زكريا ناصر</div>
+        <div class="developer-title">Mohammad Naser</div>
+        <div class="developer-badge">{_('Data Analyst', 'محلل بيانات')}</div>
+        <div style="color: #A0AEC0; font-size: 0.8rem; margin-top: 10px;">
+            ⭐ {_('Professional Dashboard', 'لوحة احترافية')}
+        </div>
     </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("<hr style='margin: 20px 0;'>", unsafe_allow_html=True)
+    # LANGUAGE SELECTION
+    lang = st.radio("Language / اللغة", ["English", "العربية"], index=0, key="language")
     
-    # SELECT ANALYSIS BELOW
+    st.markdown("<hr style='margin: 15px 0;'>", unsafe_allow_html=True)
+    
+    # Control Panel
+    st.markdown(f"""
+    <div class="sidebar-section">
+        <div class="sidebar-title">{_('🎮 Control Panel', '🎮 لوحة التحكم')}</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # SELECT ANALYSIS
     menu = st.radio(
         _("Select Analysis", "اختر التحليل"),
         [
-            _("Year Analysis", "تحليل السنوات"),
-            _("Company Analysis", "تحليل الشركات"),
-            _("Year Comparison", "مقارنة السنوات"),
-            _("Predictions & Models", "التوقعات والنماذج"),
-            _("Data Overview", "نظرة عامة")
+            _("📊 Year Analysis", "📊 تحليل السنوات"),
+            _("🏢 Company Analysis", "🏢 تحليل الشركات"),
+            _("⚖️ Year Comparison", "⚖️ مقارنة السنوات"),
+            _("🤖 Predictions & Models", "🤖 التوقعات والنماذج"),
+            _("📈 Data Overview", "📈 نظرة عامة")
         ],
         key="analysis_menu"
     )
+    
+    st.markdown("<hr style='margin: 15px 0;'>", unsafe_allow_html=True)
+    
+    # Quick Stats
+    with st.expander(_("📊 Quick Stats", "📊 إحصائيات سريعة"), expanded=False):
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric(_("Companies", "الشركات"), f"{df['name'].nunique():,}")
+        with col2:
+            st.metric(_("Years", "السنوات"), f"{df['year'].nunique()}")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric(_("Avg Revenue", "متوسط الإيرادات"), f"${df['revenue_mil'].mean():.0f}M")
+        with col2:
+            st.metric(_("Avg Profit", "متوسط الأرباح"), f"${df['profit_mil'].mean():.0f}M")
 
 # ==================== DATA LOADING ====================
 @st.cache_data
@@ -317,22 +415,22 @@ def load_data():
     files = {}
     try:
         files['main'] = pd.read_csv('fortune500_cleaned.csv')
-        st.sidebar.success(f"Main: {len(files['main']):,} rows")
+        st.sidebar.success(f"✅ Main: {len(files['main']):,} rows")
     except:
         files['main'] = pd.DataFrame()
     try:
         files['pred2024'] = pd.read_csv('fortune500_2024_predictions.csv')
-        st.sidebar.success(f"2024: {len(files['pred2024']):,} rows")
+        st.sidebar.success(f"✅ 2024: {len(files['pred2024']):,} rows")
     except:
         files['pred2024'] = pd.DataFrame()
     try:
         files['models'] = pd.read_csv('fortune500_models_performance.csv')
-        st.sidebar.success(f"Models: {len(files['models'])} models")
+        st.sidebar.success(f"✅ Models: {len(files['models'])} models")
     except:
         files['models'] = pd.DataFrame()
     try:
         files['test'] = pd.read_csv('fortune500_test_predictions.csv')
-        st.sidebar.success(f"Test: {len(files['test']):,} rows")
+        st.sidebar.success(f"✅ Test: {len(files['test']):,} rows")
     except:
         files['test'] = pd.DataFrame()
     return files
@@ -379,9 +477,11 @@ st.markdown(f"""
     <p style="color: rgba(255,255,255,0.95); margin-top: 15px; font-size: 1.4rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
         {_('1996-2024 Analysis & Predictions', 'تحليل وتوقعات 1996-2024')}
     </p>
+    <p style="color: #A0AEC0; margin-top: 10px; font-size: 1rem;">
+        {_('Developed by Mohammad Naser', 'تم التطوير بواسطة محمد ناصر')}
+    </p>
 </div>
 """, unsafe_allow_html=True)
-
 # ==================== MAIN CONTENT BASED ON SELECTION ====================
 if menu == _("Year Analysis", "تحليل السنوات"):
     st.markdown('<div class="custom-card">', unsafe_allow_html=True)
