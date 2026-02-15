@@ -671,13 +671,15 @@ st.markdown(f"""
             margin-top: 40px;
             border: 1px solid rgba(255,255,255,0.2);
             text-align: center;">
-    
+    <div>
         <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem;">
             {_('Powered by Streamlit & Plotly', 'بتقنية Streamlit و Plotly')}
         </p>
     </div>
+    <div>
     <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 10px;">
         © 2024 {_('All Rights Reserved', 'جميع الحقوق محفوظة')}
     </p>
+    </div>
 </div>
 """, unsafe_allow_html=True)
